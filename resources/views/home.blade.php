@@ -55,21 +55,20 @@ $gallery = get_gallery()
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/home">Home</a></li>
           <li class="dropdown"><a href="#"><span>Data</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Curah Hujan</a></li>
               <li><a href="#">Klimatologi</a></li>
-              <li><a href="#">Tinggi Muka Air</a></li>
+              <li><a href="/data">Tinggi Muka Air</a></li>
               <li><a href="#">Kekeringan</a></li>
               <li><a href="#">Kualitas Air</a></li>
-              <li><a href="#">Onlimo Debit</a></li>
             </ul>
           </li>
           <li class="dropdown"><a href="#"><span>Peta</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Curah Hujan</a></li>
-              <li><a href="#">Tinggi Muka Air</a></li>
+              <li><a href="/maps/maps_ch">Curah Hujan</a></li>
+              <li><a href="/maps/maps_tma">Tinggi Muka Air</a></li>
               <li><a href="#">Kualitas Air</a></li>
               <li><a href="#">Sebaran Hujan Harian</a></li>
             </ul>
@@ -129,7 +128,6 @@ $gallery = get_gallery()
               <li><i class="ri-check-double-line"></i> Data Tinggi Muka Air.</li>
               <li><i class="ri-check-double-line"></i> Data Kekeringan.</li>
               <li><i class="ri-check-double-line"></i> Data Kualitas Air.</li>
-              <li><i class="ri-check-double-line"></i> Data Online Monitoring Debit.</li>
             </ul>
           </div>
         </div>
@@ -147,7 +145,7 @@ $gallery = get_gallery()
 
         <div class="row justify-content-center">
           <div class="row aos-init aos-animate" data-aos="fade-up">
-            <div class="col-md-4">
+            <div class="col-md-3">
               <h2 class="text-center mb-4">Cuaca saat ini</h2>
           
               @if(isset($weatherData['current']))
@@ -172,10 +170,10 @@ $gallery = get_gallery()
           
                           <!-- UV Index and Temperature in the same row -->
                           <div class="row">
-                              <div class="col-md-6">
+                              <div class="col-md-8">
                                   <p class="card-text">Kelembaban: {{ $weatherData['current']['humidity'] }}%</p>
                               </div>
-                              <div class="col-md-6" style="text-align: right;">
+                              <div class="col-md-4" style="text-align: right;">
                                   <p class="card-text">{{ $weatherData['forecast']['forecastday'][0]['day']['mintemp_c'] }}-{{ $weatherData['forecast']['forecastday'][0]['day']['maxtemp_c'] }}°C</p>
                               </div>
                           </div>
@@ -187,35 +185,32 @@ $gallery = get_gallery()
             </div>
           
       
-            <div class="col-md-8">
+            <div class="col-md-9">
               <h2 class="text-center mb-4">Prakiraan Cuaca 5 Hari ke Depan</h2>
               <div class="card">
                 <div class="card-body">
 
                   @if(isset($weatherData['forecast']['forecastday']))
-                      <table class="table text-center">
-                          <thead>
-                              <tr>
-                                  @foreach($weatherData['forecast']['forecastday'] as $forecast)
-                                      <td>
-                                          {{ $forecast['date'] }}<br>
-                                          <!-- Displaying the weather icon -->
-                                          @if(isset($forecast['day']['condition']['icon']))
-                                              <img src="{{ $forecast['day']['condition']['icon'] }}" alt="Weather Icon" class="img-fluid mb-1">
-                                          @endif
-                                          <!-- Displaying the weather description -->
-                                          <br>
-                                          <strong>{{ $forecast['day']['condition']['text'] }}</strong><br>
-                                          <!-- Displaying the min-max temperature -->
-                                          {{ $forecast['day']['mintemp_c'] }}-{{ $forecast['day']['maxtemp_c'] }}°C
-                                      </td>
-                                  @endforeach
-                              </tr>
-                          </thead>
-                      </table>
+                      <div class="row text-center">
+                          @foreach($weatherData['forecast']['forecastday'] as $forecast)
+                              <div class="col-sm">
+                                  {{ \Carbon\Carbon::createFromFormat('Y-m-d', $forecast['date'])->format('d M') }}<br>
+                                  <!-- Displaying the weather icon -->
+                                  @if(isset($forecast['day']['condition']['icon']))
+                                      <img src="{{ $forecast['day']['condition']['icon'] }}" alt="Weather Icon" class="img-fluid mb-1">
+                                  @endif
+                                  <!-- Displaying the weather description -->
+                                  <br>
+                                  <strong>{{ $forecast['day']['condition']['text'] }}</strong><br><br>
+                                  <!-- Displaying the min-max temperature -->
+                                  {{ $forecast['day']['mintemp_c'] }}-{{ $forecast['day']['maxtemp_c'] }}°C
+                              </div>
+                          @endforeach
+                      </div>
                   @else
                       <p class="text-center">No forecast data available.</p>
                   @endif
+
                 </div>
               </div>
             </div>
@@ -278,7 +273,7 @@ $gallery = get_gallery()
         </div>
         <div class="row justify-content-lg-center">
           <div class="col-lg-5">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/I3atOY_zoxY?si=EcOvcthFmCO_207V" frameborder="0" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/G9MlqfKwWmU?si=BPLXuzkBbU6-Yo4v" title="PENGAMBILAN DATA LOGGER POS ARL BELANTING" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             
           </div>
          </div>         
