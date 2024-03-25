@@ -151,24 +151,38 @@
     map.addLayer(markersLayer);
     // Iterasi melalui data cuaca
     weatherData.forEach(item => {
-        var latitude = parseFloat(item.latitude);
-        var longitude = parseFloat(item.longitude);
+      var latitude = parseFloat(item.latitude);
+      var longitude = parseFloat(item.longitude);
 
-        if (!isNaN(latitude) && !isNaN(longitude)) {
-            // Cek apakah memiliki nilai tinggi muka air
-            if (item.rr !== null) {
-                var popupContent = '<b>' + item.POS + '</b><br>' +
-                    'Id Station: ' + item.ID + '<br>' +
-                    'Time: ' + item.DATE_UTC + '<br>' +
-                    'Latitude : ' + latitude + '<br>' +
-                    'Longitude : ' + longitude + '<br>' +
-                    'Curah Hujan: ' + item.rr + ' m <br>';
+      if (!isNaN(latitude) && !isNaN(longitude)) {
 
-                // Tambahkan marker ke layerGroup
-                var marker = L.marker([latitude, longitude], {icon: pos_on}).bindPopup(popupContent).bindTooltip(item.POS, {permanent: false, direction: 'right'});
-                markersLayer.addLayer(marker);
-            }
+        var utcDate = new Date(item.DATE_UTC);
+        var witaDate = new Date(utcDate.getTime() + (8 * 60 * 60 * 1000));
+
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };
+
+        var formattedDate = witaDate.toLocaleString('id-ID', options);
+          // Cek apakah memiliki nilai tinggi muka air
+        if (item.rr !== null) {
+          var popupContent = '<b>' + item.POS + '</b><br>' +
+              'Id Station: ' + item.ID + '<br>' +
+              'Time: ' + formattedDate + '<br>' +
+              'Latitude : ' + latitude + '<br>' +
+              'Longitude : ' + longitude + '<br>' +
+              'Curah Hujan: ' + item.rr + ' m <br>';
+
+          // Tambahkan marker ke layerGroup
+          var marker = L.marker([latitude, longitude], {icon: pos_on}).bindPopup(popupContent).bindTooltip(item.POS, {permanent: false, direction: 'right'});
+          markersLayer.addLayer(marker);
         }
+      }
     });
   </script>
 

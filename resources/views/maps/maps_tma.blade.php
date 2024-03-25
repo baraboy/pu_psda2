@@ -132,9 +132,8 @@
   <script src="/assets/js/main.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-
     const map = L.map('map').setView([-8.7,117.5], 9);
-    
+
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -151,24 +150,38 @@
     map.addLayer(markersLayer);
     // Iterasi melalui data cuaca
     weatherData.forEach(item => {
-        var latitude = parseFloat(item.latitude);
-        var longitude = parseFloat(item.longitude);
+      var latitude = parseFloat(item.latitude);
+      var longitude = parseFloat(item.longitude);
 
-        if (!isNaN(latitude) && !isNaN(longitude)) {
-            // Cek apakah memiliki nilai tinggi muka air
-            if (item.wl !== null) {
-                var popupContent = '<b>' + item.POS + '</b><br>' +
-                    'Id Station: ' + item.ID + '<br>' +
-                    'Time: ' + item.DATE_UTC + '<br>' +
-                    'Latitude : ' + latitude + '<br>' +
-                    'Longitude : ' + longitude + '<br>' +
-                    'Tinggi Muka Air: ' + item.wl + ' m <br>';
+      if (!isNaN(latitude) && !isNaN(longitude)) {
 
-                // Tambahkan marker ke layerGroup
-                var marker = L.marker([latitude, longitude], {icon: pos_on}).bindPopup(popupContent).bindTooltip(item.POS, {permanent: false, direction: 'right'});
-                markersLayer.addLayer(marker);
-            }
+        var utcDate = new Date(item.DATE_UTC);
+        var witaDate = new Date(utcDate.getTime() + (8 * 60 * 60 * 1000));
+
+        var options = {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };
+
+        var formattedDate = witaDate.toLocaleString('id-ID', options);
+        // Cek apakah memiliki nilai tinggi muka air
+        if (item.wl !== null) {
+          var popupContent = '<b>' + item.POS + '</b><br>' +
+              'Id Station: ' + item.ID + '<br>' +
+              'Time: ' + formattedDate + '<br>' +
+              'Latitude : ' + latitude + '<br>' +
+              'Longitude : ' + longitude + '<br>' +
+              'Tinggi Muka Air: ' + item.wl + ' m <br>';
+
+          // Tambahkan marker ke layerGroup
+          var marker = L.marker([latitude, longitude], {icon: pos_on}).bindPopup(popupContent).bindTooltip(item.POS, {permanent: false, direction: 'right'});
+          markersLayer.addLayer(marker);
         }
+      }
     });
   </script>
   {{-- <script>
