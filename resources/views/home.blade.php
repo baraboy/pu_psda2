@@ -67,8 +67,8 @@ $gallery = get_gallery()
           </li>
           <li class="dropdown"><a href="#"><span>Peta</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="/maps/maps_ch">Curah Hujan</a></li>
-              <li><a href="/maps/maps_tma">Tinggi Muka Air</a></li>
+              <li><a href="/maps/curahhujan">Curah Hujan</a></li>
+              <li><a href="/maps/tinggimukaair">Tinggi Muka Air</a></li>
               <li><a href="#">Kualitas Air</a></li>
               <li><a href="#">Sebaran Hujan Harian</a></li>
             </ul>

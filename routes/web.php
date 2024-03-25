@@ -25,7 +25,7 @@ Route::get('/home', function () {
 Route::get('/', [WeatherController::class, 'getWeather']);
 Route::get('/home', [WeatherController::class, 'getWeather']);
 
-Route::get('/maps/maps_tma', [WeatherController::class,'getWeatherMapsTMA']);
-Route::get('/maps/maps_ch', [WeatherController::class,'getWeatherMapsCH']);
+Route::get('/maps/tinggimukaair', [WeatherController::class,'getWeatherMapsTMA']);
+Route::get('/maps/curahhujan', [WeatherController::class,'getWeatherMapsCH']);
 
 Route::get('/data', [WeatherController::class,'getWeatherData']);
